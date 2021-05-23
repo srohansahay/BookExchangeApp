@@ -3,6 +3,7 @@
     package="com.rohan01.bookexchangeapp">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -22,6 +23,9 @@
 
         </activity>
         <activity android:name=".EditProfileActivity">
+
+        </activity>
+        <activity android:name=".SellBook">
 
         </activity>
 
