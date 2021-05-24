@@ -45,7 +45,7 @@ class SellBook: AppCompatActivity() {
                items.put("BookName",bookname)
                items.put("Points",bookpoints)
                items.put("SellerName",sellername)
-               db.collection("SellOffer").document("Details").set(items).addOnSuccessListener {
+               db.collection("SellOffer").document().set(items).addOnSuccessListener {
                   void:  Void? -> Toast.makeText(this,"Successfully updated to firestore",Toast.LENGTH_SHORT).show()
                }.addOnFailureListener { exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()  }
            }catch (e: Exception) {

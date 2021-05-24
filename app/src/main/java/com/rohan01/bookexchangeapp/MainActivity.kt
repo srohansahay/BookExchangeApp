@@ -1,5 +1,7 @@
 package com.rohan01.bookexchangeapp
 
+import android.R.layout.simple_list_item_single_choice
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -10,15 +12,19 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.api.Distribution
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.list_item.view.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,14 +45,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     private lateinit var auth: FirebaseAuth
 
-
     var db = FirebaseFirestore.getInstance()
-
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,17 +56,18 @@ class MainActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
+
         val query = db.collection("SellOffer")
         var options = FirestoreRecyclerOptions.Builder<Seller>().setQuery(query, Seller::class.java)
-            .setLifecycleOwner(this).build()
+                .setLifecycleOwner(this).build()
 
         val adapter = object: FirestoreRecyclerAdapter<Seller, SellerViewHolder>(options){
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SellerViewHolder {
-              val view = LayoutInflater.from(this@MainActivity).inflate(
-                  android.R.layout.simple_list_item_2,
-                  parent,
-                  false
-              )
+                val view = LayoutInflater.from(this@MainActivity).inflate(
+                        android.R.layout.simple_list_item_2,
+                        parent,
+                        false
+                )
                 return SellerViewHolder(view)
             }
 
@@ -78,13 +80,9 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
-
-
-
-
         rvSellers.layoutManager = LinearLayoutManager(this)
         rvSellers.adapter = adapter
+
 
     }
 
