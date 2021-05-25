@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import java.lang.Exception
 
@@ -22,7 +21,7 @@ class SellBook: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialogbox)
 
-        val store = findViewById<View>(R.id.btnSaveandSell) as Button
+        val store = findViewById<View>(R.id.btnBuyy) as Button
 
         store.setOnClickListener {
             view: View? -> store()
@@ -34,12 +33,12 @@ class SellBook: AppCompatActivity() {
     {
        val nameofbook = findViewById<View>(R.id.editTextBookName) as EditText
         val pointsofbook =  findViewById<View>(R.id.editTextBookPoints) as EditText
-
+        val sellerofbook = findViewById<View>(R.id.editTextSellerName) as EditText
         val bookname = nameofbook.text.toString().trim()
         val bookpoints = pointsofbook.text.toString().trim()
-        val sellername: String = ""
+        val sellername = sellerofbook.text.toString().trim()
 
-        if(!bookname.isEmpty() && !bookpoints.isEmpty()){
+        if(!bookname.isEmpty() && !bookpoints.isEmpty()  ){
            try {
                val items = HashMap<String, Any>()
                items.put("BookName",bookname)

@@ -17,27 +17,22 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_weight="1"
-        android:text="Title"
+
         android:textColor="#616161"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/text2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_weight="1"
-        android:text="Title"
-        android:textColor="#616161"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
 
     <ImageView
-        android:id="@+id/imgShare"
-        android:layout_width="30dp"
+        android:id="@+id/imgBuy"
+        android:layout_width="50dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:src="@android:drawable/ic_menu_share"
-        app:tint="#eeeeee" />
+        android:background="#100000"
+        android:clickable="true"
+        android:src="@android:drawable/ic_input_get"
+        android:visibility="visible"
+        app:tint="#FFEB3B"
+        tools:visibility="visible"
+        android:focusable="true" />
     </LinearLayout>

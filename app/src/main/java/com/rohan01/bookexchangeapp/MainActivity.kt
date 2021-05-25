@@ -1,6 +1,6 @@
 package com.rohan01.bookexchangeapp
 
-import android.R.layout.simple_list_item_single_choice
+import android.R.layout.*
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     class SellerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
     private companion object {
-        private val TAG = "MainActivity"
+        val TAG = "MainActivity"
 
     }
 
@@ -57,17 +57,18 @@ class MainActivity : AppCompatActivity() {
         auth = Firebase.auth
 
 
-        val query = db.collection("SellOffer")
+          val query = db.collection("SellOffer")
+
+        //public static final int simple_list_item_single_choice
+
+
         var options = FirestoreRecyclerOptions.Builder<Seller>().setQuery(query, Seller::class.java)
                 .setLifecycleOwner(this).build()
 
         val adapter = object: FirestoreRecyclerAdapter<Seller, SellerViewHolder>(options){
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SellerViewHolder {
-                val view = LayoutInflater.from(this@MainActivity).inflate(
-                        android.R.layout.simple_list_item_2,
-                        parent,
-                        false
-                )
+                val view = LayoutInflater.from(this@MainActivity).inflate(simple_list_item_2, parent, false)
+
                 return SellerViewHolder(view)
             }
 
@@ -76,6 +77,8 @@ class MainActivity : AppCompatActivity() {
                 val tvPoints: TextView = holder.itemView.findViewById(android.R.id.text2)
                 tvBookName.text = model.BookName
                 tvPoints.text = model.Points
+
+
             }
 
         }
@@ -116,6 +119,12 @@ class MainActivity : AppCompatActivity() {
              Log.i(TAG, "Show alert dialog to edit status")
             val sellbookintent = Intent(this, SellBook::class.java)
             startActivity(sellbookintent)
+
+        }
+        else if (item.itemId == R.id.miBuyaBook) {
+            Log.i(TAG, "Show alert dialog to edit status")
+            val buyabookintent = Intent(this, BuyaBook::class.java)
+            startActivity(buyabookintent)
 
         }
 
