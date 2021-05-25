@@ -17,7 +17,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_weight="1"
-
         android:textColor="#616161"
         android:textSize="20sp"
         android:textStyle="bold"/>
@@ -28,11 +27,11 @@
         android:layout_width="50dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="#100000"
+        android:background="#4A389A"
         android:clickable="true"
+        android:focusable="true"
         android:src="@android:drawable/ic_input_get"
         android:visibility="visible"
         app:tint="#FFEB3B"
-        tools:visibility="visible"
-        android:focusable="true" />
+        tools:visibility="visible" />
     </LinearLayout>

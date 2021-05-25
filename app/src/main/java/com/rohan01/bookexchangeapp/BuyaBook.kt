@@ -1,6 +1,8 @@
 package com.rohan01.bookexchangeapp
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,16 +37,16 @@ class BuyaBook : AppCompatActivity() {
        val adapter = SellBookAdapter(this, BookNames.Supplier.booknames)
          recyclerview.adapter = adapter
 
-        /*imgShare.setOnClickListener {
 
-        }*/
 
     }
 
-  /*  private fun showAlertDialog1(){
+
+
+    /*private fun showAlertDialog1(){
 
         val dialog = AlertDialog.Builder(this)
-                .setTitle("Buy this book ${map01[${document.id}]}")
+                .setTitle("Buy this book ")
                 .setView(R.layout.dialogbox)
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("SELL", null)

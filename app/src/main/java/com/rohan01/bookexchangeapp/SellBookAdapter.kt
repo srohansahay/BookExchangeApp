@@ -1,7 +1,9 @@
 package com.rohan01.bookexchangeapp
 
+import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -44,33 +46,37 @@ class SellBookAdapter(val context: Context, var booknames: MutableList<BookNames
 
 
 
-       /* init {
+        init {
             itemView.setOnClickListener {
-                Toast.makeText(context, currentBookNames!!.title + "Clicked!", Toast.LENGTH_SHORT).show()
-                showAlertDialog1()
+                Toast.makeText(context, "Purchase "+currentBookNames!!.title , Toast.LENGTH_SHORT).show()
+                val bookNamezz: String = currentBookNames!!.title
+
+                 showAlertDialog1()
             }
             itemView.imgBuy.setOnClickListener {
                 showAlertDialog1()
+                Toast.makeText(context, "Purchase "+currentBookNames!!.title, Toast.LENGTH_SHORT).show()
 
             }
-        }*/
+        }
 
-       /* private fun showAlertDialog1() {
+        private fun showAlertDialog1() {
 
             val dialog = AlertDialog.Builder(context)
                     .setTitle("Do you wish to buy the book ${currentBookNames!!.title}?")
                     .setView(R.layout.dialogbox02)
+                    .setPositiveButton("Buy", null)
                     .setNegativeButton("Cancel", null)
-                    .setPositiveButton("SELL", null)
                     .show()
 
             dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
-              //  Log.i(MainActivity.TAG, "Clicked on positive button!")
+                //  Log.i(MainActivity.TAG, "Clicked on positive button!")
                 Toast.makeText(context, "You purchased ${currentBookNames!!.title}", Toast.LENGTH_SHORT).show()
 
+                dialog.dismiss()
             }
-            dialog.dismiss()
-        }*/
+
+        }
 
             fun setData(hobby: BookNames?, pos: Int) {
                 itemView.text1.text = hobby!!.title
