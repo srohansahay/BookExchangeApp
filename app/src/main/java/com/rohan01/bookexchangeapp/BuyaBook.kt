@@ -10,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 
 import kotlinx.android.synthetic.main.activity_buy_abook.*
+import kotlinx.android.synthetic.main.dialogbox.*
 import kotlinx.android.synthetic.main.list_item.*
 
 class BuyaBook : AppCompatActivity() {
@@ -34,24 +35,12 @@ class BuyaBook : AppCompatActivity() {
         recyclerview.layoutManager = layoutManager
 
 
-       val adapter = SellBookAdapter(this, BookNames.Supplier.booknames)
+       val adapter = SellBookAdapter(this, BookNames.Supplier.booknames, BookLinks.Supplier.booklinks)
          recyclerview.adapter = adapter
-
 
 
     }
 
 
-
-    /*private fun showAlertDialog1(){
-
-        val dialog = AlertDialog.Builder(this)
-                .setTitle("Buy this book ")
-                .setView(R.layout.dialogbox)
-                .setNegativeButton("Cancel", null)
-                .setPositiveButton("SELL", null)
-                .show()
-
-    }*/
 
 }

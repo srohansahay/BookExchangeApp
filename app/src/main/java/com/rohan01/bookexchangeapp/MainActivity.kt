@@ -1,9 +1,14 @@
 package com.rohan01.bookexchangeapp
 
 import android.R.layout.*
+import android.accounts.Account
+import android.accounts.AccountManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.Spanned
@@ -12,6 +17,7 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,7 +36,6 @@ import kotlinx.android.synthetic.main.list_item.view.*
 class MainActivity : AppCompatActivity() {
 
 
-
     data class Seller(
         val SellerName: String = "",
         val BookName: String = "",
@@ -38,10 +43,11 @@ class MainActivity : AppCompatActivity() {
 
         )
 
-    class SellerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    class SellerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private companion object {
         val TAG = "MainActivity"
+
 
     }
 
@@ -57,17 +63,25 @@ class MainActivity : AppCompatActivity() {
         auth = Firebase.auth
 
 
-          val query = db.collection("SellOffer")
+        val query = db.collection("SellOffer")
 
-        //public static final int simple_list_item_single_choice
+        val am: AccountManager = AccountManager.get(this) // "this" references the current Context
+
+        val accounts: Array<out Account> = am.getAccountsByType("com.google")
+
+
+
+
+
 
 
         var options = FirestoreRecyclerOptions.Builder<Seller>().setQuery(query, Seller::class.java)
-                .setLifecycleOwner(this).build()
+            .setLifecycleOwner(this).build()
 
-        val adapter = object: FirestoreRecyclerAdapter<Seller, SellerViewHolder>(options){
+        val adapter = object : FirestoreRecyclerAdapter<Seller, SellerViewHolder>(options) {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SellerViewHolder {
-                val view = LayoutInflater.from(this@MainActivity).inflate(simple_list_item_2, parent, false)
+                val view = LayoutInflater.from(this@MainActivity)
+                    .inflate(simple_list_item_2, parent, false)
 
                 return SellerViewHolder(view)
             }
@@ -88,6 +102,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
 
 
 
@@ -131,92 +146,5 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-   inner class PointFilter: InputFilter{
-        override fun filter(
-            source: CharSequence?,
-            start: Int,
-            end: Int,
-            dest: Spanned?,
-            dstart: Int,
-            dend: Int
-        ): CharSequence {
-            if(source == null || source.isBlank()){
-                return ""
-            }
-            Log.i(TAG, "added text $source, it has length ${source.length} characters")
-            val validCharTypes = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-            for (inputChar in source) {
-                val type = Character.getType(inputChar)
-                Log.i(TAG, "Character type $type")
-               if (!validCharTypes.contains(type)){
-                   Toast.makeText(this@MainActivity, "Only numbers are allowed", Toast.LENGTH_SHORT).show()
-                   return ""
-               }
-            }
-            return source
-        }
 
-    }
-
-    private fun showAlertDialog() {
-
-      val editText = EditText(this)
-       val pointfilter = PointFilter()
-        val lengthFilter= InputFilter.LengthFilter(3)
-        editText.filters = arrayOf(lengthFilter, pointfilter)
-        val editText2 = EditText(this)
-        editText2.filters = arrayOf(lengthFilter)
-
-        val SellerName = ""
-        val dialog = AlertDialog.Builder(this)
-                .setTitle("Sell your book")
-                .setView(R.layout.dialogbox)
-                .setNegativeButton("Cancel", null)
-                .setPositiveButton("SELL", null)
-                .show()
-        val nameofBook = findViewById<View>(R.id.editTextBookName) as EditText
-        val pointsofBook = findViewById<View>(R.id.editTextBookPoints) as EditText
-
-
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
-            Log.i(TAG, "Clicked on positive button!")
-
-            val BookPoints = nameofBook.text.toString().trim()
-            val BookName = pointsofBook.text.toString().trim()
-
-
-            if (BookPoints.isBlank()){
-                Toast.makeText(this, "Cannot submit empty book points :(", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-            if (BookName.isBlank()){
-                Toast.makeText(this, "Cannot submit empty book name :(", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-            val currentUser = auth.currentUser
-
-            if (currentUser == null){
-                Toast.makeText(this, "No signed in user :(", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-
-            val items = hashMapOf(
-                "BookName" to BookName,
-                "Points" to BookPoints,
-                "Seller" to SellerName,
-            )
-
-            db.collection("SellOffer").document("TradeDetails").set(items).addOnSuccessListener { void: Void -> Toast.makeText(
-                this,
-                "Successfully uploaded",
-                Toast.LENGTH_SHORT
-            ).show() }
-                  //  .update("Points", BookPoints)
-            dialog.dismiss()
-
-
-        }
-
-
-    }
 }

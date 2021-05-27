@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class SellBookAdapter(val context: Context, var booknames: MutableList<BookNames>): RecyclerView.Adapter<SellBookAdapter.MyViewHolder>() {
+class SellBookAdapter(val context: Context, var booknames: MutableList<BookNames>, var booklinks: MutableList<BookLinks>): RecyclerView.Adapter<SellBookAdapter.MyViewHolder>() {
 
 
 
@@ -32,7 +32,8 @@ class SellBookAdapter(val context: Context, var booknames: MutableList<BookNames
 
     override fun onBindViewHolder(holder:MyViewHolder, position: Int) {
         val hobby = booknames[position]
-        holder.setData(hobby,position)
+        val linked = booklinks[position]
+        holder.setData(hobby,position, linked)
     }
 
 
@@ -43,13 +44,16 @@ class SellBookAdapter(val context: Context, var booknames: MutableList<BookNames
 
         var currentBookNames: BookNames? = null
         var currentPosition: Int = 0
+        var currentLinkNames: BookLinks? = null
+
+
 
 
 
         init {
             itemView.setOnClickListener {
                 Toast.makeText(context, "Purchase "+currentBookNames!!.title , Toast.LENGTH_SHORT).show()
-                val bookNamezz: String = currentBookNames!!.title
+
 
                  showAlertDialog1()
             }
@@ -69,23 +73,49 @@ class SellBookAdapter(val context: Context, var booknames: MutableList<BookNames
                     .setNegativeButton("Cancel", null)
                     .show()
 
+
+
+
             dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
                 //  Log.i(MainActivity.TAG, "Clicked on positive button!")
                 Toast.makeText(context, "You purchased ${currentBookNames!!.title}", Toast.LENGTH_SHORT).show()
+
+              showAlertDialog2()
 
                 dialog.dismiss()
             }
 
         }
 
-            fun setData(hobby: BookNames?, pos: Int) {
+            fun setData(hobby: BookNames?, pos: Int, linked: BookLinks?) {
                 itemView.text1.text = hobby!!.title
 
                 this.currentBookNames = hobby
                 this.currentPosition = pos
+                this.currentLinkNames = linked
             }
 
 
+        private fun showAlertDialog2() {
+
+            val dialog = AlertDialog.Builder(context)
+                    .setTitle(" ${currentLinkNames!!.link}?")
+                    .setView(R.layout.dialogbox03)
+                    .setPositiveButton("Download", null)
+                    .setNegativeButton("Cancel", null)
+                    .show()
+
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
+
+                Toast.makeText(context, "Use the above link  ${currentLinkNames!!.link} to download the book ", Toast.LENGTH_LONG).show()
+
+
+                dialog.dismiss()
+
+            }
+
+
+        }
 
 
     }

@@ -16,8 +16,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 
        var booknames = mutableListOf<BookNames>()
 
-         // var items01 = HashMap<String, String>()
-         //var items02 = HashMap<String, String>()
 
        var db = FirebaseFirestore.getInstance()
 
@@ -37,4 +35,40 @@ import com.google.firebase.firestore.FirebaseFirestore
     }
   }
 
+ data class BookLinks(var link: String) {
 
+     private companion object {
+         private val TAG = "Model"
+
+     }
+
+     object Supplier {
+
+
+         var booklinks = mutableListOf<BookLinks>()
+
+
+
+
+         var db = FirebaseFirestore.getInstance()
+
+         val docRef = db.collection("SellOffer")
+                 .get()
+                 .addOnSuccessListener { result ->
+                     for (document in result) {
+                         Log.d(BookLinks.TAG, "${document.id} => ${document.getString("BookLink")}")
+                         booklinks.add(BookLinks("${document.getString("BookLink")}"))
+
+                     }
+                 }
+                 .addOnFailureListener { exception ->
+                     Log.d(BookLinks.TAG, "Error getting documents: ", exception)
+                 }
+
+     }
+
+
+
+
+
+ }
